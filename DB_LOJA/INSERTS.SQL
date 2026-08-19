@@ -143,3 +143,119 @@ INSERT INTO PGMT_X_PEDIDOS (ID_PAGAMENTO, ID_PEDIDO) VALUES
 ------------------------------------------------------------
 -- FIM DO SCRIPT
 ------------------------------------------------------------
+------------------------------------------------------------
+-- MAIS ENDEREÇOS
+------------------------------------------------------------
+INSERT INTO ENDERECOS (PAIS, ESTADO, CIDADE, ENDERECO, CEP) VALUES
+('Brasil', 'GO', 'Goiânia', 'Av Goiás, 1200', '74000000'),
+('Brasil', 'BA', 'Salvador', 'Rua da Bahia, 300', '40000000'),
+('Brasil', 'PE', 'Recife', 'Av Boa Viagem, 900', '51000000');
+
+------------------------------------------------------------
+-- MAIS CLIENTES
+------------------------------------------------------------
+INSERT INTO CLIENTES (CPF, NOME, COMPLETO, ID_ENDERECO) VALUES
+('11122233344', 'Bruno Rocha', 'Cliente com muitos pedidos', 7),
+('55566677788', 'Juliana Alves', 'Cliente com divergências', 8),
+('99988877766', 'Marcos Tavares', 'Cliente com vários itens', 9);
+
+------------------------------------------------------------
+-- MAIS TELEFONES DE CLIENTES
+------------------------------------------------------------
+INSERT INTO CLIENTES_TELEFONES (TELEFONE, ID_CLIENTE) VALUES
+('62999998888', 6),
+('71988887766', 7),
+('81977776655', 8);
+
+------------------------------------------------------------
+-- MAIS EMAILS DE CLIENTES
+------------------------------------------------------------
+INSERT INTO CLIENTES_EMAILS (EMAIL, ID_CLIENTE) VALUES
+('bruno@gmail.com', 6),
+('juliana@hotmail.com', 7),
+('marcos@yahoo.com', 8);
+
+------------------------------------------------------------
+-- MAIS MÉTODOS DE PAGAMENTO
+------------------------------------------------------------
+INSERT INTO METODOS_PAGAMENTOS (ID_CLIENTE, TIPO, NUMERO, BANDEIRA) VALUES
+(6, 'Crédito', '1111222233334444', 'Visa'),
+(6, 'Pix', 'bruno@pix.com', 'PIX'),
+(7, 'Débito', '5555666677778888', 'Master'),
+(8, 'Crédito', '9999000011112222', 'Elo');
+
+------------------------------------------------------------
+-- MAIS FUNCIONÁRIOS
+------------------------------------------------------------
+INSERT INTO FUNCIONARIOS (MATRICULA, CTPS, NOME, CARGO, ID_ENDERECO, COMPLETO) VALUES
+(1004, '22233344455', 'Mariana Duarte', 'Vendedora', 7, 'Funcionária desde 2022'),
+(1005, '33344455566', 'Thiago Ramos', 'Supervisor', 8, 'Funcionário desde 2020');
+
+------------------------------------------------------------
+-- MAIS PRODUTOS
+------------------------------------------------------------
+INSERT INTO PRODUTOS (NOME, ESPECICACAO, PRECO, QUANTIDADE, PRECO_CUSTO, PESO, ID_FORNECEDOR) VALUES
+('Teclado Mecânico', 'Switch Blue RGB', 250, 50, 150, 0.8, 1),
+('Monitor LG 24"', 'Full HD, HDMI', 850, 40, 600, 3.5, 1),
+('Xbox Series X', 'Console Microsoft', 4700, 15, 3500, 5.0, 2),
+('Microondas Electrolux', '20L Branco', 450, 25, 300, 12, 3),
+('Ventilador Arno', 'Turbo Silencioso', 200, 60, 120, 4, 3);
+
+------------------------------------------------------------
+-- MAIS AVALIAÇÕES (incluindo divergências)
+------------------------------------------------------------
+INSERT INTO AVALIACAO (ID_CLIENTE, ID_PRODUTOR, NOTA, DESCRICAO) VALUES
+(6, 1, 4, 'Bom notebook, mas poderia ser mais rápido'),
+(6, 3, 5, 'Excelente console'),
+(7, 2, 2, 'Mouse veio com defeito'),
+(7, 5, 5, 'Air Fryer perfeita'),
+(8, 3, 3, 'Console ok, mas caro'),
+(8, 1, 5, 'Notebook muito bom');
+
+------------------------------------------------------------
+-- MAIS PEDIDOS (com divergências de itens)
+------------------------------------------------------------
+INSERT INTO PEDIDOS (ID_CLIENTE, ID_FUNCIONARIO, FRETE, VALOR_TOTAL, IMPOSTO, QUANTIDADE_ITENS, COMPLEMENTO, ID_ENDERECO) VALUES
+(6, 1004, 35, 5100, 300, 3, 'Entrega expressa', 7),
+(6, 1005, 20, 400, 20, 2, 'Retirar na loja', 7),
+(7, 1004, 50, 9000, 500, 4, 'Entrega premium', 8),
+(8, 1005, 15, 1050, 60, 3, 'Entrega normal', 9),
+(8, 1001, 25, 250, 15, 1, 'Entrega rápida', 9);
+
+------------------------------------------------------------
+-- PRODUTOS X PEDIDO (divergências reais)
+------------------------------------------------------------
+INSERT INTO PRODUTOS_X_PEDIDO (ID_PEDIDO, ID_PRODUTO, QUANTIDADE, VALOR_UNITARIO) VALUES
+-- Pedido 6 (3 itens diferentes)
+(6, 1, 1, 3500),
+(6, 2, 2, 150),
+(6, 6, 1, 250),
+
+-- Pedido 7 (2 itens, um repetido)
+(7, 2, 3, 150),
+(7, 5, 1, 350),
+
+-- Pedido 8 (4 itens diferentes)
+(8, 3, 1, 4500),
+(8, 10, 1, 850),
+(8, 11, 1, 4700),
+(8, 12, 1, 450),
+
+-- Pedido 9 (3 itens)
+(9, 6, 2, 250),
+(9, 7, 1, 850),
+(9, 13, 1, 200),
+
+-- Pedido 10 (1 item)
+(10, 13, 1, 200);
+
+------------------------------------------------------------
+-- PAGAMENTOS X PEDIDOS (incluindo múltiplos pagamentos)
+------------------------------------------------------------
+INSERT INTO PGMT_X_PEDIDOS (ID_PAGAMENTO, ID_PEDIDO) VALUES
+(7, 6),
+(8, 6), -- pedido 6 pago com 2 métodos
+(9, 7),
+(10, 8),
+(11, 9),
+(12, 10);
